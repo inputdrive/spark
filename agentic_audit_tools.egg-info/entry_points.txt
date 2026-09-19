@@ -1,0 +1,2 @@
+[console_scripts]
+agentic-audit-tools = agentic_audit.cli:main

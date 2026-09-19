@@ -1,88 +1,58 @@
 # Agentic Audit Tools
 
-A docs-first foundation for a local-machine audit toolset that will identify
-artifacts associated with agentic coding workflows. The intended scope includes
-workstation-local evidence from tools such as Cursor, Claude Code, GitHub
-Copilot, other coding agents, MCP configurations and servers, transcripts,
-agent stores, extensions, caches, and potentially sensitive configuration
-references.
+A local-first toolkit for identifying and reviewing workstation artifacts used by
+agentic coding workflows. The project is designed for defensive inventory and
+review, not for exfiltration or remote collection.
 
-This project is designed for defensive inventory and review. Future scanners
-must be explicit about consent and scope, minimize collection, preserve
-provenance, redact or avoid secret values by default, and never transmit
-workstation data unless a user deliberately enables an export path.
+## What this repo includes
 
-## First slice
+- a curated local reference collection in [documents/](documents/)
+- a read-only discovery catalog for common agent-related locations on macOS,
+  Linux, and Windows
+- a safe parsing layer for MCP configuration files and transcript metadata with
+  redaction of sensitive values
+- a repository-local Python environment and tests for validation
 
-This initial slice contains a curated set of official NIST publications, saved
-locally under [`documents/`](documents/), plus an annotated
-[`documents/README.md`](documents/README.md) index. The selection covers:
+## Security and design principles
 
-- AI and generative-AI risk management;
-- collection, examination, analysis, and reporting of forensic artifacts;
-- logging and incident-response considerations;
-- software and AI supply-chain risks; and
-- secure software-development practices for general and GenAI systems.
+This project intentionally follows strict guardrails:
 
-There are deliberately no scanners, telemetry, authentication, databases,
-network services, or web application in this first slice.
+- no secret values are printed by default
+- file contents are not read for discovery operations
+- collection is limited to metadata and path existence checks
+- local-only workflows are preferred
+- provenance and auditability are part of the design
 
-## Read the collection locally
+## Quick start
 
-Open [`documents/README.md`](documents/README.md) in a Markdown-capable editor
-for the index, then open any linked PDF with a local PDF reader.
-
-To browse the files from a local directory server:
-
-```sh
-python3 -m http.server 8765 --directory documents
+```bash
+cd /Users/first/github/spark
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+python agentic_audit/discover.py --os darwin
 ```
 
-Then visit <http://127.0.0.1:8765>. This serves files only from your local
-checkout; it does not run an audit or send data anywhere. Stop it with
-`Ctrl-C`.
+Run the checks:
 
-## Current status
+```bash
+python -m pytest -q
+```
 
-This repository has moved from the reference-only foundation into an initial
-implementation pass for a read-only local discovery workflow.
+## Reference collection
 
-Completed:
-
-- repo-local Python environment and dependency setup via `.venv` and
-  `requirements.txt`;
-- a catalog of known artifact locations for macOS, Linux, and Windows;
-- a discovery command that reports existence and metadata without reading file
-  contents;
-- tests covering the catalog and the no-secret-leak requirement; and
-- a hash manifest for the reference collection in `documents/`.
-
-Planned next steps:
-
-1. Define a machine-readable catalog of known artifact locations, owners,
-   sensitivity classes, and collection rules for supported operating systems.
-2. Implement a read-only discovery command that reports paths and metadata
-   without reading or printing secret contents.
-3. Add opt-in parsers for agent/MCP configuration, transcript metadata, and
-   extension/dependency provenance, each with redaction and test fixtures.
-4. Produce a reviewable local report that links every finding to its collection
-   rule, evidence metadata, risk context, and remediation guidance.
-5. Add integrity checks, least-privilege execution guidance, retention
-   controls, and repeatable tests before expanding to richer evidence
-   collection.
+The project includes a curated set of official NIST references and supporting
+materials in [documents/README.md](documents/README.md). These are used to inform
+risk, evidence-handling, and secure-development practices without making any
+claim of compliance.
 
 ## License
 
-This project is licensed under the Apache License, Version 2.0.
+This project is licensed under the Apache License, Version 2.0. See
+[LICENSE](LICENSE) for the full text.
 
-See [`LICENSE`](LICENSE) for the full text. The license requires attribution,
-retains copyright notice requirements, and allows reuse and modification with
-clear documentation of the original source.
+## Status
 
-## Reference basis
-
-The included publications are official NIST PDFs. See
-[`documents/README.md`](documents/README.md) for titles, permanent NIST URLs,
-and a concise explanation of each document's relevance. NIST guidance informs
-the design; using this repository alone does not establish regulatory or
-framework compliance.
+This is an initial public release focused on safe local discovery and reference
+material. It is intentionally narrow in scope and designed to be extended in a
+reviewable, least-privilege manner.

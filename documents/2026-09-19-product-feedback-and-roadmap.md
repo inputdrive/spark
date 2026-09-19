@@ -106,7 +106,7 @@ It should not expose raw transcript content, tokens, secrets, or live credential
 
 ### Priority 2 — nice to have for later
 
-- compare receipts across scans for delta analysis
+- compare receipts across scans for delta analysis (implemented as a safe metadata delta model)
 - store scan provenance metadata
 - add a policy bundle for organizational review settings
 - support customer-specific reporting templates
@@ -165,15 +165,44 @@ A feature is considered done when all of the following are true:
 - receipt exports must be carefully scoped to avoid accidental sharing
 - the project must avoid drifting into remote collection or telemetry behavior
 
-## 11. Immediate next actions
+## 11. Execution status as of 2026-09-19
 
-1. Add a receipt schema module and CLI output for scan results.
-2. Define stable redaction rule IDs.
-3. Add tests proving that receipts do not leak secret-bearing values.
-4. Add a project changelog and versioned release note for the next milestone.
-5. Keep this document updated as the repo evolves.
+### Completed
 
-## 12. Decision record
+- Audit receipt schema v1.0 is implemented and exported from the Python package.
+- CLI supports local receipt generation via the receipt path parameter.
+- The project test suite passes with the new receipt feature and the prior safety checks.
+- The privacy model remains metadata-first and secret-safe.
+
+### In progress
+
+- Documenting the receipt schema for broader adoption and review.
+- Aligning the output with a clearer product story for defensive local audit workflows.
+- Expanding the backlog into a repeatable milestone structure.
+
+### Next milestone
+
+Milestone name: Receipt-first audit workflow
+
+Goal: Make every scan produce a stable local evidence record that a human reviewer can trust without exposing secrets.
+
+Required outcomes:
+
+1. Standardize receipt schema versioning and naming.
+2. Add documentation for the receipt model and export path.
+3. Add a release note and change log entry for the new feature.
+4. Expand the test matrix to cover export, allowed-reader fields, and redaction rule IDs.
+5. Review whether the tool should support JSON and Markdown export formats in the next iteration.
+
+## 12. Immediate next actions
+
+1. Add a receipt schema module and CLI output for scan results. (completed)
+2. Define stable redaction rule IDs. (in progress)
+3. Add tests proving that receipts do not leak secret-bearing values. (completed)
+4. Add a project changelog and versioned release note for the next milestone. (next)
+5. Keep this document updated as the repo evolves. (ongoing)
+
+## 13. Decision record
 
 Decision: The repo should grow by formalizing a defensible audit trail for every scan rather than expanding into broader collection behavior.
 

@@ -2,7 +2,12 @@ import json
 from pathlib import Path
 
 from agentic_audit.discover import discover_artifacts
-from agentic_audit.receipt import build_audit_receipt, write_audit_receipt
+from agentic_audit.receipt import (
+    build_audit_receipt,
+    summarize_audit_receipt,
+    write_audit_receipt,
+    write_audit_summary,
+)
 
 
 def test_build_audit_receipt_adds_safe_review_fields(tmp_path: Path):
@@ -29,8 +34,12 @@ def test_build_audit_receipt_adds_safe_review_fields(tmp_path: Path):
     assert claude_receipt["finding_id"] == "finding-004"
     assert claude_receipt["artifact_path"] == str(claude_dir)
     assert claude_receipt["allowed_reader"] == "security-reviewer"
-    assert claude_receipt["redaction_rule"] == "redact_key_names_and_tokens"
+    assert claude_receipt["redaction_rule_id"] == "redact_key_names_and_tokens"
     assert "super-secret-value" not in json.dumps(receipt)
+
+    summary = summarize_audit_receipt(receipt)
+    assert summary["redaction_rule_id"] == "redact_key_names_and_tokens"
+    assert summary["total_findings"] == len(receipt["findings"])
 
 
 def test_write_audit_receipt_exports_json_file(tmp_path: Path):
@@ -52,3 +61,9 @@ def test_write_audit_receipt_exports_json_file(tmp_path: Path):
     assert export_path.exists()
     assert json.loads(export_path.read_text(encoding="utf-8"))["receipt_version"] == "1.0"
     assert receipt["findings"][0]["allowed_reader"] == "reviewer"
+
+    summary_path = tmp_path / "receipts" / "scan-summary.md"
+    summary_text = write_audit_summary(receipt, export_path=summary_path)
+    assert summary_path.exists()
+    assert "finding-001" in summary_text
+    assert "reviewer" in summary_text

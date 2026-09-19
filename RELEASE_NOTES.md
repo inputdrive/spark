@@ -1,5 +1,32 @@
 # Release notes
 
+## 0.2.0
+
+This release adds the first formal audit-receipt workflow for the project. It is
+intended to make local review more defensible, reproducible, and easy to
+compare across time without turning the workstation into a leak oracle.
+
+### Included
+- audit receipt generation for each scan
+- safe markdown summary export for human review
+- stable redaction rule identifiers in the receipt payload
+- metadata-only receipt comparison across two saved scans
+- CLI support for receipt generation and diff review
+
+### Scope
+This release keeps the same strong design principles as the initial version:
+local-only inventory, metadata-first collection, privacy-preserving output, and
+no secret disclosure by default.
+
+### Notes
+- receipts are intentionally limited to metadata and review context
+- raw transcript text is not exported
+- configuration values and bearer tokens are never emitted
+- receipts can be compared to show added, removed, or changed findings over time
+
+### License
+This project is licensed under the Apache License, Version 2.0.
+
 ## 0.1.0
 
 This is the first public release of Agentic Audit Tools.

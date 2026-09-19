@@ -33,6 +33,20 @@ python -m pip install -r requirements.txt
 python agentic_audit/discover.py --os darwin
 ```
 
+Generate a privacy-preserving audit receipt for review:
+
+```bash
+python -m agentic_audit.cli --os darwin --receipt-path ./audit-receipt.json --summary-path ./audit-summary.md --allowed-reader security-reviewer
+```
+
+Compare two saved receipts to review how local findings changed over time:
+
+```bash
+python -m agentic_audit.cli --compare ./audit-receipt-2026-09-19.json ./audit-receipt-2026-09-20.json
+```
+
+The receipt stays metadata-only and records rule IDs, findings, and allowed readers without printing secret values. See [documents/agentic-audit-receipt-spec.md](documents/agentic-audit-receipt-spec.md) for the schema and export format.
+
 Run the checks:
 
 ```bash

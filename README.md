@@ -71,6 +71,14 @@ Planned next steps:
    controls, and repeatable tests before expanding to richer evidence
    collection.
 
+## License
+
+This project is licensed under the Apache License, Version 2.0.
+
+See [`LICENSE`](LICENSE) for the full text. The license requires attribution,
+retains copyright notice requirements, and allows reuse and modification with
+clear documentation of the original source.
+
 ## Reference basis
 
 The included publications are official NIST PDFs. See

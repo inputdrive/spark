@@ -67,6 +67,6 @@ This project is licensed under the Apache License, Version 2.0. See
 
 ## Status
 
-This is an initial public release focused on safe local discovery and reference
-material. It is intentionally narrow in scope and designed to be extended in a
-reviewable, least-privilege manner.
+This is the 0.2.0 release, focused on safe local discovery and receipt-based
+review workflows. It is intentionally narrow in scope and designed to be
+extended in a reviewable, least-privilege manner.

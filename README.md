@@ -42,7 +42,22 @@ Then visit <http://127.0.0.1:8765>. This serves files only from your local
 checkout; it does not run an audit or send data anywhere. Stop it with
 `Ctrl-C`.
 
-## Planned next steps
+## Current status
+
+This repository has moved from the reference-only foundation into an initial
+implementation pass for a read-only local discovery workflow.
+
+Completed:
+
+- repo-local Python environment and dependency setup via `.venv` and
+  `requirements.txt`;
+- a catalog of known artifact locations for macOS, Linux, and Windows;
+- a discovery command that reports existence and metadata without reading file
+  contents;
+- tests covering the catalog and the no-secret-leak requirement; and
+- a hash manifest for the reference collection in `documents/`.
+
+Planned next steps:
 
 1. Define a machine-readable catalog of known artifact locations, owners,
    sensitivity classes, and collection rules for supported operating systems.

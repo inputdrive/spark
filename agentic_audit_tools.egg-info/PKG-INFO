@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: agentic-audit-tools
-Version: 0.1.0
+Version: 0.2.0
 Summary: Read-only local audit inventory for agentic coding tools
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
@@ -42,6 +42,20 @@ python -m pip install -r requirements.txt
 python agentic_audit/discover.py --os darwin
 ```
 
+Generate a privacy-preserving audit receipt for review:
+
+```bash
+python -m agentic_audit.cli --os darwin --receipt-path ./audit-receipt.json --summary-path ./audit-summary.md --allowed-reader security-reviewer
+```
+
+Compare two saved receipts to review how local findings changed over time:
+
+```bash
+python -m agentic_audit.cli --compare ./audit-receipt-2026-09-19.json ./audit-receipt-2026-09-20.json
+```
+
+The receipt stays metadata-only and records rule IDs, findings, and allowed readers without printing secret values. See [documents/agentic-audit-receipt-spec.md](documents/agentic-audit-receipt-spec.md) for the schema and export format.
+
 Run the checks:
 
 ```bash
@@ -62,6 +76,6 @@ This project is licensed under the Apache License, Version 2.0. See
 
 ## Status
 
-This is an initial public release focused on safe local discovery and reference
-material. It is intentionally narrow in scope and designed to be extended in a
-reviewable, least-privilege manner.
+This is the 0.2.0 release, focused on safe local discovery and receipt-based
+review workflows. It is intentionally narrow in scope and designed to be
+extended in a reviewable, least-privilege manner.

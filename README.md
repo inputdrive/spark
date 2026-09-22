@@ -26,7 +26,6 @@ This project intentionally follows strict guardrails:
 ## Quick start
 
 ```bash
-cd /Users/first/github/spark
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt

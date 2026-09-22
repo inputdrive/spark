@@ -7,6 +7,8 @@ TAP_ORG="inputdrive"
 TAP_NAME="homebrew-tap"
 FORMULA_NAME="agentic-audit-tools"
 FORMULA_PATH="${TAP_REPO_DIR}/Formula/${FORMULA_NAME}.rb"
+VERSION_TAG="${VERSION_TAG:-v0.2.1}"
+TARBALL_SHA256="${TARBALL_SHA256:-REPLACE_WITH_RELEASE_TARBALL_SHA256}"
 
 mkdir -p "$(dirname "${TAP_REPO_DIR}")"
 
@@ -25,8 +27,8 @@ cat > "${FORMULA_PATH}" <<'EOF'
 class AgenticAuditTools < Formula
   desc "Read-only local audit inventory for agentic coding tools"
   homepage "https://github.com/inputdrive/spark"
-  url "https://github.com/inputdrive/spark/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "cf1bcc3aa9733e36b20dd74bd2affba6e3a2e1e271c5bdefe6f77e8d46523caa"
+  url "https://github.com/inputdrive/spark/archive/refs/tags/${VERSION_TAG}.tar.gz"
+  sha256 "${TARBALL_SHA256}"
   license "Apache-2.0"
 
   depends_on "python@3.12"
@@ -38,10 +40,15 @@ class AgenticAuditTools < Formula
   end
 
   test do
-    system "#{bin}/agentic-audit-tools", "--help"
+    output = shell_output("#{bin}/agentic-audit-tools")
+    assert_match "\"collection_rule\"", output
   end
 end
 EOF
+
+if [ "${TARBALL_SHA256}" = "REPLACE_WITH_RELEASE_TARBALL_SHA256" ]; then
+  echo "WARNING: Set TARBALL_SHA256 to the release tarball checksum before publishing the tap formula."
+fi
 
 git -C "${TAP_REPO_DIR}" add Formula/${FORMULA_NAME}.rb
 if ! git -C "${TAP_REPO_DIR}" diff --cached --quiet; then
@@ -54,5 +61,6 @@ fi
 
 echo "Tap repo ready at: ${TAP_REPO_DIR}"
 echo "Formula path: ${FORMULA_PATH}"
+echo "Version tag: ${VERSION_TAG}"
 echo "Push with: git -C \"${TAP_REPO_DIR}\" push -u origin main"
 echo "Install with: brew tap ${TAP_ORG}/tap && brew install ${FORMULA_NAME}"

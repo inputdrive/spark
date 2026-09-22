@@ -1,5 +1,23 @@
 # Release notes
 
+## 0.2.1
+
+This release makes OS handling predictable by default and reduces required
+flags for routine local scans.
+
+### Included
+- discovery now auto-detects the host OS when `--os` is not passed
+- CLI receipt generation now records the resolved OS value in `scan_scope`
+- README usage now defaults to auto-detection and keeps `--os` as an explicit override option
+- regression coverage for catalog auto-detection behavior
+
+### Scope
+This is a focused behavior and documentation update that preserves the same
+metadata-only and local-first security model from 0.2.0.
+
+### License
+This project is licensed under the Apache License, Version 2.0.
+
 ## 0.2.0
 
 This release adds the first formal audit-receipt workflow for the project. It is

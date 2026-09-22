@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2026-09-22
+
+### Changed
+- discovery now auto-detects the current operating system when `--os` is not provided
+- CLI receipt generation now records the resolved OS in scan scope without requiring `--os`
+- README examples now default to OS auto-detection and document `--os` as an override
+
+### Fixed
+- default catalog selection no longer falls back to all platform rules when OS is omitted
+
 ## [0.2.0] - 2026-09-19
 
 ### Added

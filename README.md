@@ -29,14 +29,16 @@ This project intentionally follows strict guardrails:
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
-python agentic_audit/discover.py --os darwin
+python agentic_audit/discover.py
 ```
 
 Generate a privacy-preserving audit receipt for review:
 
 ```bash
-python -m agentic_audit.cli --os darwin --receipt-path ./audit-receipt.json --summary-path ./audit-summary.md --allowed-reader security-reviewer
+python -m agentic_audit.cli --receipt-path ./audit-receipt.json --summary-path ./audit-summary.md --allowed-reader security-reviewer
 ```
+
+Pass `--os` only when you need to override auto-detection.
 
 Compare two saved receipts to review how local findings changed over time:
 

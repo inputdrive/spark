@@ -20,6 +20,14 @@ def test_catalog_has_expected_entries():
     assert all("paths" in rule for rule in catalog)
 
 
+def test_catalog_autodetects_os_when_not_provided(monkeypatch):
+    monkeypatch.setattr("agentic_audit.catalog.platform.system", lambda: "Darwin")
+    catalog = catalog_for_os()
+    ids = {rule["id"] for rule in catalog}
+
+    assert ids == {"cursor", "claude_code", "github_copilot", "mcp_servers"}
+
+
 def test_discover_reports_only_metadata_without_file_contents(tmp_path):
     claude_dir = tmp_path / "Library" / "Application Support" / "Claude"
     claude_dir.mkdir(parents=True)

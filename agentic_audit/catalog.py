@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import platform
 from typing import Any
 
 
@@ -140,8 +141,19 @@ def _windows_rules() -> list[dict[str, Any]]:
     ]
 
 
+def detect_os_name() -> str:
+    system_name = platform.system().lower()
+    if system_name.startswith("darwin") or system_name.startswith("mac"):
+        return "darwin"
+    if system_name.startswith("linux"):
+        return "linux"
+    if system_name.startswith("win"):
+        return "windows"
+    return system_name
+
+
 def catalog_for_os(os_name: str | None = None) -> list[dict[str, Any]]:
-    normalized = (os_name or "").lower()
+    normalized = (os_name or detect_os_name()).lower()
     if normalized.startswith("darwin"):
         return _darwin_rules()
     if normalized.startswith("linux"):

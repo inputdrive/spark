@@ -42,7 +42,7 @@ def discover_artifacts(home_dir: str | Path | None = None, os_name: str | None =
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Report local agentic tool artifact locations without reading file contents.")
-    parser.add_argument("--os", dest="os_name", help="Operating system name, such as darwin, linux, or windows.")
+    parser.add_argument("--os", dest="os_name", help="Operating system name, such as darwin, linux, or windows. Defaults to auto-detected platform.")
     parser.add_argument("--home-dir", dest="home_dir", help="Home directory to inspect. Defaults to the current user home.")
     args = parser.parse_args()
 
